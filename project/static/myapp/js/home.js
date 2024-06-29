@@ -1,4 +1,56 @@
 
+var youtubeVideoID = 'M7lc1UVf-VE';
+
+// see docs: https://developers.google.com/youtube/iframe_api_reference#playVideo
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+// This function gets called globally by the youtube iframe api code
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: youtubeVideoID,
+    playerVars: {
+      'playsinline': 1
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange,
+      'onAutoplayBlocked': onAutoplayBlocked,
+    }
+  });
+}
+
+function onAutoplayBlocked(event) {
+  console.log('autoplay blocked')
+  event.target.playVideo();
+  setTimeout(()=>event.target.playVideo(), 1000);
+}
+
+function onPlayerReady(event) {
+  console.dir(event);
+  event.target.mute();
+  event.target.playVideo();
+  setTimeout(() => event.target.unMute(), 1000);
+  console.log('video played')
+}
+function onAutoplayBlocked() {
+  console.log('autoplay blocked')
+}
+
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+    done = true;
+  }
+}
+
+
 function waitForElement(selector, callback, timeout = 10000) {
   const startTime = Date.now();
 
@@ -20,19 +72,7 @@ function waitForElement(selector, callback, timeout = 10000) {
 
 
 async function main(){
-  console.log('waiting for element')
-  await waitForElement('video', 30).catch((error) => {
-    console.error(error);
-    alert(error.message)
-    window.location.reload();
-  });
-
-  console.log('element loaded, clicking button')
-  document.querySelector().click()
-  
+  //does nothing for now
 }
 
-alert("need interaction");
-
-document.querySelector('#vid-container').innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=_knmV3R79qiaz-pK" muted="1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
 main();
