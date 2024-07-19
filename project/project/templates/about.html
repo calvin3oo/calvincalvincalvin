@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me - Calvin Olson</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Guitar Hero</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About Me</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <div class="container about-section">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="{% static '/media/myself.jpg' %}" alt="Calvin Olson" class="about-image">
+      </div>
+      <div class="col-md-8">
+        <h1>About Me</h1>
+        <p>Hello! I'm Calvin Olson, a passionate software engineering student about to graduate from BYU-Idaho. My journey in software development has been driven by a love for creating innovative and impactful solutions.</p>
+        <p>Throughout my academic career, I have honed my skills in various programming languages and development frameworks. I have a particular interest in game development, and this project, Guitar Hero, is a testament to my dedication and passion for creating engaging user experiences.</p>
+        <p>In addition to my technical skills, I am a strong advocate for continuous learning and personal growth. I enjoy collaborating with others and believe that teamwork and communication are key to successful project development.</p>
+        <p>Feel free to connect with me through the contact form on the home page or through my social media links below. I'm excited to share my work with you and look forward to future opportunities to create amazing software together.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer text-center">
+    <p>&copy; 2024 Calvin Olson. All rights reserved.</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+  <script src="{% static 'myapp/js/home.js' %}" defer></script>
+</body>
+</html>

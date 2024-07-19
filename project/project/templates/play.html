@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhythm Game</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Youtube Embedded Video -->
+  <div id="youtube-container">
+    <input id="youtube-input" type="text" class="form-control" placeholder="Enter YouTube Video URL">
+    <button class="btn btn-primary my-2" id="play-btn">Ready Iframe</button>
+
+    <div id="yt-iframe-container"><div id="player"></div></div>
+    
+    <p>Press Space and the Corresponding key when note is just above yellow line. Play the Youtube video to start.</p>
+  </div>
+  <div id="game-body">
+    <div id="game">
+      <div class="space-indicator" id="space-indicator"></div>
+      <div class="line"></div>
+      <div id="high-score">High Score: 0</div>
+      <div id="score">Score: 0</div>
+      <div class="indicator-bar">
+        <div class="indicator" id="z-indicator">Z</div>
+        <div class="indicator" id="x-indicator">X</div>
+        <div class="indicator" id="c-indicator">C</div>
+        <div class="indicator" id="v-indicator">V</div>
+        <div class="indicator" id="b-indicator">B</div>
+        <div class="ind-spacer"></div>
+      </div>
+    </div>
+  </div>
+  <div id="loader" class="loader">
+    <div>
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-3">Loading...</p>
+    </div>
+  </div>
+
+  <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+  <script src="{% static '/js/game.js' %}" defer></script>
+  
+</body>
+</html>

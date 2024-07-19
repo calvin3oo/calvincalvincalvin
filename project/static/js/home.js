@@ -33,11 +33,11 @@ function onAutoplayBlocked(event) {
 }
 
 function onPlayerReady(event) {
-  console.dir(event);
-  event.target.mute();
-  event.target.playVideo();
-  setTimeout(() => event.target.unMute(), 1000);
-  console.log('video played')
+  // console.dir(event);
+  // event.target.mute();
+  // event.target.playVideo();
+  // setTimeout(() => event.target.unMute(), 1000);
+  // console.log('video played')
 }
 function onAutoplayBlocked() {
   console.log('autoplay blocked')

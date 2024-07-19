@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me - Calvin Olson</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .contact-section {
+      padding: 60px 0;
+    }
+    .footer {
+      background: #343a40;
+      color: white;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Guitar Hero</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#features">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <div class="container contact-section">
+    <h1>Contact Me</h1>
+    <p>If you have any questions or would like to get in touch, please fill out the form below. I look forward to hearing from you!</p>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea class="form-control" id="message" rows="3" placeholder="Enter your message"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer text-center">
+    <p>&copy; 2024 Calvin Olson. All rights reserved.</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+  <script src="{% static 'myapp/js/home.js' %}" defer></script>
+</body>
+</html>

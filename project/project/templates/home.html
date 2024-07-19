@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar Hero Rhythm Game</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Guitar Hero</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/features">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About the Dev</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/play">Play</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Rock Your World</h1>
+  </div>
+
+  <!-- Features Section -->
+  <div class="container features" id="features">
+    <div class="row">
+      <div class="col-md-4 feature">
+        <img src="https://example.com/feature1.jpg" class="img-fluid" alt="Feature 1">
+        <h3>Epic Tracks</h3>
+        <p>Experience a variety of tracks from different genres that will get you rocking.</p>
+      </div>
+      <div class="col-md-4 feature">
+        <img src="https://example.com/feature2.jpg" class="img-fluid" alt="Feature 2">
+        <h3>Play Any YouTube Video</h3>
+        <p>Play along to any YouTube video by simply entering the URL and rock out to your favorite songs.</p>
+      </div>
+      <div class="col-md-4 feature">
+        <img src="https://example.com/feature3.jpg" class="img-fluid" alt="Feature 3">
+        <h3>Single Player Mode</h3>
+        <p>Enjoy an immersive single-player experience with intuitive controls and stunning graphics.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="container" id="about">
+    <h2>About Guitar Hero</h2>
+    <p>Guitar Hero is the ultimate rhythm game that lets you live out your rockstar dreams. With intuitive controls, stunning graphics, and the ability to play along to any YouTube video by entering its URL, you'll feel like a true rock legend.</p>
+  </div>
+
+  <!-- large button to play that redirects to /play -->
+   <div class="w-100 d-flex justify-content-center mb-4">
+    <a href="/play" class="btn btn-lg btn-primary">Play Now</a>
+   </div>
+
+
+  <!-- Footer -->
+  <div class="footer text-center">
+    <p>&copy; 2024 Guitar Hero. All rights reserved.</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+  <script src="{% static 'myapp/js/home.js' %}" defer></script>
+</body>
+</html>
