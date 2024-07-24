@@ -11,12 +11,23 @@
 
   <!-- Youtube Embedded Video -->
   <div id="youtube-container">
-    <input id="youtube-input" type="text" class="form-control" placeholder="Enter YouTube Video URL">
-    <button class="btn btn-primary my-2" id="play-btn">Ready Iframe</button>
+    <div id="diff-container">
+      <h2>Difficulty:</h2>
+      <div class="diff-options pb-2">
+        <button class="btn btn-primary" id="easy-btn">Easy</button>
+        <button class="btn btn-primary" id="medium-btn">Medium</button>
+        <button class="btn btn-primary" id="hard-btn">Hard</button>
+      </div>
+      <h2>Controller: <input type="checkbox" id="controller-checkbox" class="pb-1" style="width: 20px;height: 20px"></h2>
+    </div>
+    <div id="yt-input-container">
+      <input id="youtube-input" type="text" class="form-control" placeholder="Enter YouTube Video URL">
+      <button class="btn btn-primary my-2" id="play-btn">Ready Iframe</button>
+    </div>
 
     <div id="yt-iframe-container"><div id="player"></div></div>
     
-    <p>Press Space and the Corresponding key when note is just above yellow line. Play the Youtube video to start.</p>
+    <p class="pb-4">Press Space and the Corresponding key when note is just above yellow line. Play the Youtube video to start.</p>
   </div>
   <div id="game-body">
     <div id="game">

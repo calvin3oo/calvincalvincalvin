@@ -1,14 +1,13 @@
-from pytube import YouTube
-from pydub import AudioSegment
+# from pytube import YouTube
+# from pydub import AudioSegment
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
 import os
 import librosa
 import numpy as np
 
 def download_youtube_audio_as_mp3(youtube_url):
     try:
-      from pytubefix import YouTube
-      from pytubefix.cli import on_progress
-            
       yt = YouTube(youtube_url, on_progress_callback = on_progress)
       print(yt.title)
       
@@ -66,14 +65,14 @@ def generate_rhythm_game_code(notes):
   return rhythm_code
 
 youtube_url = 'https://www.youtube.com/watch?v=LHd447EafFY'  
-# fileName = download_youtube_audio_as_mp3(youtube_url)
-fileName = "Donald Trump speaks for the 1st time on the assassination attempt.mp3"
-fileName = "C:/Users/calvi/Code/calvincalvincalvin/Donald Trump speaks for the 1st time on the assassination attempt.mp3"
+fileName = download_youtube_audio_as_mp3(youtube_url)
+# fileName = "Donald Trump speaks for the 1st time on the assassination attempt.mp3"
+# fileName = "C:/Users/calvi/Code/calvincalvincalvin/Donald Trump speaks for the 1st time on the assassination attempt.mp3"
 tempo, notes = analyze_audio(fileName)
 
 rhythm_code = generate_rhythm_game_code(notes)
-for line in rhythm_code:
-  print(line)
+# for line in rhythm_code:
+#   print(line)
 
 print(f'Tempo: {tempo} beats per minute')
 

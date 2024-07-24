@@ -7,19 +7,51 @@ let isPaused = false;
 let spacePressed = false;
 const notes = [];
 const trackPositions = [50, 125, 200, 275, 350]; // Five tracks
-const keys = ['z', 'x', 'c', 'v', 'b']; // Corresponding keys for the tracks
-const keyMap = { 'z': 50, 'x': 125, 'c': 200, 'v': 275, 'b': 350 };
-const invertedKeyMap = {50: 'z', 125: 'x', 200: 'c', 275: 'v', 350: 'b' };
-const indicators = {
+let keys = ['z', 'x', 'c', 'v', 'b']; // Corresponding keys for the tracks
+let keyMap = { 'z': 50, 'x': 125, 'c': 200, 'v': 275, 'b': 350 };
+let invertedKeyMap = {50: 'z', 125: 'x', 200: 'c', 275: 'v', 350: 'b' };
+let indicators = {
   'z': document.getElementById('z-indicator'),
   'x': document.getElementById('x-indicator'),
   'c': document.getElementById('c-indicator'),
   'v': document.getElementById('v-indicator'),
   'b': document.getElementById('b-indicator')
 };
+/* controller a:0, b:1, x:2, y:3, lb:4, rb:5
+  a: z, b:x, x:c, y:v, rb: b, lb: strum
+  need: e.key and e.code
+  */
+let controllerToKeyboard = {
+  0:{
+      'key': 'z',
+      'code': 'notSpace'
+  },
+  1:{
+    'key': 'x',
+    'code': 'notSpace'
+  },
+  2:{
+    'key': 'c',
+    'code': 'notSpace'
+  },
+  3:{
+    'key': 'v',
+    'code': 'notSpace'
+  },
+  4:{
+    'key': 'space',
+    'code': 'Space'
+  },
+  5:{
+    'key': 'b',
+    'code': 'notSpace'
+  },
+}
+let difficulty = 1; // 1 2 or 3 for now
+let isStrum = (e) => e.code === 'Space';
 
 // set high score from local storage
-highScoreElement.textContent = `Personal Best: ${localStorage.getItem('highscore') || 0}`;
+highScoreElement.textContent = `Personal Best: ${parseInt(localStorage.getItem('highscore')) || 0}`;
 
 // set all indicators 'style-left' to their respective positions
 Object.keys(indicators).forEach(key => {
@@ -40,6 +72,7 @@ function createNote(trackNum) { // trackNum can be 0 through 4
   //   track = trackPositions[Math.floor(Math.random() * trackPositions.length)];
   // }
   // console.log(track);
+  if(!track) return;
   note.dataset.track = track; // Store track info in dataset
   note.style.left = `${track}px`;
   gameArea.appendChild(note);
@@ -75,13 +108,14 @@ const higherBound = 1150;
 const average = parseInt((lowerBound + higherBound) / 2);
 
 function checkHit(e) {
-  if (e.code === 'Space') {
+  // console.log(e.code);
+  if (isStrum(e)) {
     // console.log('Space pressed');
 
     const activeKeys = Object.keys(indicators).filter(key => indicators[key].classList.contains('active'));
     const notesInHitRange = notes.filter(note => {
       const noteRect = note.getBoundingClientRect();
-      console.dir(noteRect);
+      // console.dir(noteRect);
       return noteRect.bottom > lowerBound && noteRect.bottom < higherBound;
     });
 
@@ -114,18 +148,19 @@ function handleKeyDown(e) {
   if (keys.includes(key)) {
     indicators[key].classList.add('active');
   }
-  if (e.code === 'Space') {
+  if (isStrum(e)) {
     spacePressed = true;
     spaceIndicator.classList.add('active');
   }
 }
 
 function handleKeyUp(e) {
+  // console.dir(e);
   const key = e.key.toLowerCase();
   if (keys.includes(key)) {
     indicators[key].classList.remove('active');
   }
-  if (e.code === 'Space') {
+  if (isStrum(e)) {
     spacePressed = false;
     spaceIndicator.classList.remove('active');
   }
@@ -186,24 +221,26 @@ function progressTrack() {
 }
 let initializingTrack = true;
 async function startGame() {
-  console.log("starting game", videoId);
+  // console.log("starting game", videoId);
   document.getElementById('loader').style.display = 'flex';
 
   const response = await fetch(`http://localhost:8000/getRythmCode?v=${videoId}`).catch(error => alert('Error:'+ error));
   notesData = await response.json();
   
-  console.log("progressing track");
-  setInterval(() => progressTrack(), 800);
-  setInterval(moveNotes, 40);
+  // console.log("progressing track");
+  const moveNotesEveryMillis = 40 - (7 * difficulty);
+  const progressTrackMillis = 800 - (100 * difficulty);
+  setInterval(() => progressTrack(), progressTrackMillis);
+  setInterval(moveNotes, moveNotesEveryMillis);
 
   resumeGame()
 
   setTimeout(() => {
-    console.log("playing video");
+    // console.log("playing video");
     document.getElementById('loader').style.display = 'none';
     player.playVideo()
     initializingTrack = false;
-  }, 4000)
+  }, (4000/difficulty))
 }
 
 document.getElementById('yt-iframe-container')
@@ -211,7 +248,7 @@ document.getElementById('yt-iframe-container')
 let videoId = "LHd447EafFY"; // default video ID
 function loadIframe(vidId) {
   videoId = vidId;
-  console.log('loadIframe', videoId);
+  // console.log('loadIframe', videoId);
 
   // yt iframe api docs: https://developers.google.com/youtube/iframe_api_reference#playVideo
   var tag = document.createElement('script');
@@ -253,8 +290,80 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-document.querySelector('#youtube-container > button').addEventListener('click', function() {
+
+window.addEventListener("gamepadconnected", onGamepadConnected);
+window.addEventListener("gamepaddisconnected", onGamepadDisconnected);
+
+function onGamepadConnected(event) {
+    // console.log("Gamepad connected:", event.gamepad);
+    requestAnimationFrame(updateGamepadStatus);
+}
+function onGamepadDisconnected(event) {
+    // console.log("Gamepad disconnected:", event.gamepad);
+}
+const keysDown = {};
+function updateGamepadStatus() {
+  const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+
+  for (const gamepad of gamepads) {
+    if (!gamepad) continue;
+    gamepad.buttons.forEach((button, index) => {
+      if(!keysDown[index]) keysDown[index] = false;
+
+      if (button.pressed) {
+        // console.log(`Button ${index} pressed`);
+      }
+
+      // if button is pressed and wasn't pressed last frame
+      if(button.pressed &&!keysDown[index]) {
+        let fakeEvent = controllerToKeyboard[index];
+        checkHit(fakeEvent)
+        handleKeyDown(fakeEvent);
+      }
+
+      // if button is released and was pressed last frame
+      if(!button.pressed && keysDown[index]) {
+        let fakeEvent = controllerToKeyboard[index];
+        handleKeyUp(fakeEvent);
+      }
+
+      /* controller a:0, b:1, x:2, y:3, lb:4, rb:5
+      a: z, b:x, x:c, y:v, rb: b, lb: strum
+      need: e.key and e.code
+      */
+
+      keysDown[index] = button.pressed;
+
+    });
+  }
+
+  requestAnimationFrame(updateGamepadStatus);
+}
+
+
+document.querySelector('#play-btn').addEventListener('click', function() {
   const youtubeURL = document.querySelector('#youtube-input').value;
   const youtubeVideoID = youtubeURL.split('v=')[1];
   loadIframe(youtubeVideoID);
+  document.querySelector('#yt-input-container').hidden = true;
+  document.querySelector('#diff-container').hidden = true;
+});
+
+document.getElementById('easy-btn').addEventListener('click', () => difficulty = 1);
+document.getElementById('medium-btn').addEventListener('click', () => difficulty = 2);
+document.getElementById('hard-btn').addEventListener('click', () => difficulty = 3);
+document.getElementById('controller-checkbox').addEventListener('click', (e) => {
+  if(e.target.checked) {
+    document.getElementById('z-indicator').innerText = "A";
+    document.getElementById('x-indicator').innerText = "B";
+    document.getElementById('c-indicator').innerText = "X";
+    document.getElementById('v-indicator').innerText = "Y";
+    document.getElementById('b-indicator').innerText = "RB";
+  } else {
+    document.getElementById('z-indicator').innerText = "Z";
+    document.getElementById('x-indicator').innerText = "X";
+    document.getElementById('c-indicator').innerText = "C";
+    document.getElementById('v-indicator').innerText = "V";
+    document.getElementById('b-indicator').innerText = "B";
+  }
 });
